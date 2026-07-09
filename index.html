@@ -7,8 +7,8 @@
   <meta name="description"
         content="A friendly, step-by-step guide to setting up your harleypig.com email on your phone." />
   <meta name="color-scheme" content="light dark" />
-  <meta name="theme-color" content="#f7efe3" media="(prefers-color-scheme: light)" />
-  <meta name="theme-color" content="#1d1813" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#eef2fb" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#131926" media="(prefers-color-scheme: dark)" />
 
   <!-- Envelope favicon, inline so the page stays self-contained. -->
   <link rel="icon"
@@ -23,19 +23,19 @@
   <style>
     /* ---- Tokens --------------------------------------------------------- */
     :root {
-      --paper:      #f7efe3;   /* warm cream background          */
-      --paper-2:    #fbf6ee;   /* lifted surface                */
+      --paper:      #eef2fb;   /* cool paper background         */
+      --paper-2:    #f5f8fd;   /* lifted surface                */
       --card:       #ffffff;   /* card surface                  */
-      --ink:        #2c2620;   /* warm near-black text          */
-      --muted:      #6f6154;   /* secondary text                */
-      --line:       #e7dccb;   /* hairline borders              */
-      --coral:      #e0623f;   /* primary accent (warm)         */
-      --coral-soft: #fbe6de;   /* coral tint fill               */
+      --ink:        #1e2735;   /* cool near-black text          */
+      --muted:      #5b6675;   /* secondary text                */
+      --line:       #dde5f2;   /* hairline borders              */
+      --blue:       #2f6fe0;   /* primary accent (medium blue)  */
+      --blue-soft:  #e0eafb;   /* blue tint fill                */
       --leaf:       #2f8f63;   /* "recommended / good" green    */
       --leaf-soft:  #dcf0e4;   /* green tint fill               */
-      --amber-soft: #fbeecb;   /* gentle highlight              */
-      --shadow:     28px 28px 60px -30px rgba(76, 52, 30, .45);
-      --shadow-sm:  0 2px 0 rgba(76, 52, 30, .06), 0 10px 24px -16px rgba(76, 52, 30, .5);
+      --wash:       #dbe7fb;   /* gentle blue highlight         */
+      --shadow:     28px 28px 60px -30px rgba(30, 50, 90, .40);
+      --shadow-sm:  0 2px 0 rgba(30, 50, 90, .05), 0 10px 24px -16px rgba(30, 50, 90, .45);
       --radius:     22px;
       --radius-sm:  14px;
       --display: "Fraunces", Georgia, "Times New Roman", serif;
@@ -44,17 +44,17 @@
 
     @media (prefers-color-scheme: dark) {
       :root {
-        --paper:      #1d1813;
-        --paper-2:    #241e18;
-        --card:       #2b241d;
-        --ink:        #f3e8d8;
-        --muted:      #bda993;
-        --line:       #3d342a;
-        --coral:      #f5825f;
-        --coral-soft: #40261f;
+        --paper:      #131926;
+        --paper-2:    #1a2130;
+        --card:       #1f2838;
+        --ink:        #e9eef8;
+        --muted:      #a3b1c7;
+        --line:       #313d52;
+        --blue:       #5c8cf0;
+        --blue-soft:  #22304a;
         --leaf:       #6bc596;
         --leaf-soft:  #1f3a2c;
-        --amber-soft: #3a301a;
+        --wash:       #1c2740;
         --shadow:     28px 28px 60px -30px rgba(0, 0, 0, .6);
         --shadow-sm:  0 2px 0 rgba(0, 0, 0, .25), 0 12px 26px -16px rgba(0, 0, 0, .7);
       }
@@ -71,10 +71,10 @@
       line-height: 1.65;
       color: var(--ink);
       background: var(--paper);
-      /* soft warm glow, top-center, for a sunrise feel */
+      /* soft blue glow, top-center, for a calm airy feel */
       background-image:
-        radial-gradient(120% 80% at 50% -10%, var(--amber-soft) 0%, transparent 55%),
-        radial-gradient(90% 60% at 108% 8%, var(--coral-soft) 0%, transparent 45%);
+        radial-gradient(120% 80% at 50% -10%, var(--wash) 0%, transparent 55%),
+        radial-gradient(90% 60% at 108% 8%, var(--blue-soft) 0%, transparent 45%);
       background-attachment: fixed;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
@@ -94,7 +94,7 @@
       letter-spacing: -.015em;
       margin-bottom: .5rem;
     }
-    h1 .accent { color: var(--coral); font-style: italic; }
+    h1 .accent { color: var(--blue); font-style: italic; }
     h2 {
       font-size: clamp(1.7rem, 6.5vw, 2.15rem);
       letter-spacing: -.01em;
@@ -103,17 +103,17 @@
     h3 { font-size: 1.3rem; font-weight: 600; }
     p { margin: 0 0 1rem; }
     .lead { font-size: 1.32rem; color: var(--muted); font-weight: 500; }
-    a { color: var(--coral); font-weight: 600; text-underline-offset: 3px; }
+    a { color: var(--blue); font-weight: 600; text-underline-offset: 3px; }
 
     /* number badge on the eyebrow */
     .eyebrow {
       display: inline-flex; align-items: center; gap: .55rem;
       font-weight: 700; font-size: .82rem; letter-spacing: .14em;
-      text-transform: uppercase; color: var(--coral);
+      text-transform: uppercase; color: var(--blue);
       margin: 0 0 1.1rem;
     }
     .eyebrow::before {
-      content: ""; width: 1.9rem; height: 2px; background: var(--coral); border-radius: 2px;
+      content: ""; width: 1.9rem; height: 2px; background: var(--blue); border-radius: 2px;
     }
 
     section { margin-top: clamp(2.6rem, 8vw, 3.6rem); }
@@ -193,9 +193,9 @@
       transition: border-color .15s, background .15s, transform .06s;
       text-align: left;
     }
-    button.copy:hover { border-color: var(--coral); }
+    button.copy:hover { border-color: var(--blue); }
     button.copy:active { transform: scale(.985); }
-    button.copy:focus-visible { outline: 3px solid var(--coral); outline-offset: 2px; }
+    button.copy:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
     button.copy .val { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     button.copy .hint {
       flex: none; display: inline-flex; align-items: center; gap: .3rem;
@@ -243,9 +243,9 @@
       font-family: var(--display); font-weight: 600; font-size: 1.15rem;
       width: 2.2rem; height: 2.2rem; flex: none;
       display: grid; place-items: center;
-      color: #fff; background: var(--coral);
+      color: #fff; background: var(--blue);
       border-radius: 50%;
-      box-shadow: 0 4px 10px -3px var(--coral);
+      box-shadow: 0 4px 10px -3px var(--blue);
     }
     ol.steps li .st { align-self: center; }
     ol.steps li .st b { font-weight: 700; }
@@ -258,7 +258,7 @@
 
     /* ---- Webmail fallback ---------------------------------------------- */
     .fallback {
-      background: linear-gradient(135deg, var(--coral) 0%, #d1512f 100%);
+      background: linear-gradient(135deg, var(--blue) 0%, #1e56c8 100%);
       color: #fff; border-radius: var(--radius);
       padding: 1.6rem 1.5rem;
       box-shadow: var(--shadow);
@@ -267,7 +267,7 @@
     .fallback p { color: rgba(255,255,255,.9); margin-bottom: 1.15rem; }
     .btn {
       display: inline-flex; align-items: center; gap: .55rem;
-      background: #fff; color: #b6431f;
+      background: #fff; color: #1a4bb0;
       font-weight: 700; font-size: 1.1rem;
       text-decoration: none;
       padding: .85rem 1.4rem; border-radius: 999px;
@@ -282,7 +282,7 @@
       margin-top: 3.5rem; padding-top: 1.6rem; border-top: 1px solid var(--line);
       color: var(--muted); font-size: 1rem; text-align: center;
     }
-    footer .heart { color: var(--coral); }
+    footer .heart { color: var(--blue); }
 
     /* ---- Toast ---------------------------------------------------------- */
     #toast {
