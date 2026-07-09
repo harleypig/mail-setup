@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Set up your harleypig.com email</title>
+  <meta name="description"
+        content="A friendly, step-by-step guide to setting up your harleypig.com email on your phone." />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#f7efe3" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#1d1813" media="(prefers-color-scheme: dark)" />
+
+  <!-- Envelope favicon, inline so the page stays self-contained. -->
+  <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9C%89%EF%B8%8F%3C/text%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Figtree:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    /* ---- Tokens --------------------------------------------------------- */
+    :root {
+      --paper:      #f7efe3;   /* warm cream background          */
+      --paper-2:    #fbf6ee;   /* lifted surface                */
+      --card:       #ffffff;   /* card surface                  */
+      --ink:        #2c2620;   /* warm near-black text          */
+      --muted:      #6f6154;   /* secondary text                */
+      --line:       #e7dccb;   /* hairline borders              */
+      --coral:      #e0623f;   /* primary accent (warm)         */
+      --coral-soft: #fbe6de;   /* coral tint fill               */
+      --leaf:       #2f8f63;   /* "recommended / good" green    */
+      --leaf-soft:  #dcf0e4;   /* green tint fill               */
+      --amber-soft: #fbeecb;   /* gentle highlight              */
+      --shadow:     28px 28px 60px -30px rgba(76, 52, 30, .45);
+      --shadow-sm:  0 2px 0 rgba(76, 52, 30, .06), 0 10px 24px -16px rgba(76, 52, 30, .5);
+      --radius:     22px;
+      --radius-sm:  14px;
+      --display: "Fraunces", Georgia, "Times New Roman", serif;
+      --body: "Figtree", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --paper:      #1d1813;
+        --paper-2:    #241e18;
+        --card:       #2b241d;
+        --ink:        #f3e8d8;
+        --muted:      #bda993;
+        --line:       #3d342a;
+        --coral:      #f5825f;
+        --coral-soft: #40261f;
+        --leaf:       #6bc596;
+        --leaf-soft:  #1f3a2c;
+        --amber-soft: #3a301a;
+        --shadow:     28px 28px 60px -30px rgba(0, 0, 0, .6);
+        --shadow-sm:  0 2px 0 rgba(0, 0, 0, .25), 0 12px 26px -16px rgba(0, 0, 0, .7);
+      }
+    }
+
+    /* ---- Reset / base --------------------------------------------------- */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+
+    body {
+      margin: 0;
+      font-family: var(--body);
+      font-size: 1.18rem;
+      line-height: 1.65;
+      color: var(--ink);
+      background: var(--paper);
+      /* soft warm glow, top-center, for a sunrise feel */
+      background-image:
+        radial-gradient(120% 80% at 50% -10%, var(--amber-soft) 0%, transparent 55%),
+        radial-gradient(90% 60% at 108% 8%, var(--coral-soft) 0%, transparent 45%);
+      background-attachment: fixed;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    main {
+      width: min(680px, 100% - 2.2rem);
+      margin-inline: auto;
+      padding: clamp(2.2rem, 8vw, 4rem) 0 4.5rem;
+    }
+
+    /* ---- Type ----------------------------------------------------------- */
+    h1, h2, h3 { font-family: var(--display); font-weight: 600; line-height: 1.08; margin: 0; }
+    h1 {
+      font-size: clamp(2.5rem, 11vw, 3.6rem);
+      font-weight: 600;
+      letter-spacing: -.015em;
+      margin-bottom: .5rem;
+    }
+    h1 .accent { color: var(--coral); font-style: italic; }
+    h2 {
+      font-size: clamp(1.7rem, 6.5vw, 2.15rem);
+      letter-spacing: -.01em;
+      margin-bottom: .35rem;
+    }
+    h3 { font-size: 1.3rem; font-weight: 600; }
+    p { margin: 0 0 1rem; }
+    .lead { font-size: 1.32rem; color: var(--muted); font-weight: 500; }
+    a { color: var(--coral); font-weight: 600; text-underline-offset: 3px; }
+
+    /* number badge on the eyebrow */
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: .55rem;
+      font-weight: 700; font-size: .82rem; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--coral);
+      margin: 0 0 1.1rem;
+    }
+    .eyebrow::before {
+      content: ""; width: 1.9rem; height: 2px; background: var(--coral); border-radius: 2px;
+    }
+
+    section { margin-top: clamp(2.6rem, 8vw, 3.6rem); }
+
+    /* ---- Cards ---------------------------------------------------------- */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.5rem 1.4rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .callout {
+      display: flex; gap: .95rem; align-items: flex-start;
+      background: var(--paper-2);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 1.05rem 1.15rem;
+      font-size: 1.06rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .callout .ico { font-size: 1.5rem; line-height: 1.2; flex: none; }
+    .callout strong { color: var(--ink); }
+
+    /* ---- Settings block: tap-to-copy ------------------------------------ */
+    .settings { display: grid; gap: 1.1rem; }
+
+    .box {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .box > header {
+      display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
+      padding: 1.1rem 1.25rem .35rem;
+    }
+    .box > header h3 { font-family: var(--body); font-size: 1.18rem; font-weight: 700; }
+    .box > header .sub { color: var(--muted); font-size: .98rem; font-weight: 500; }
+
+    .tag {
+      font-family: var(--body);
+      font-size: .74rem; font-weight: 700; letter-spacing: .05em;
+      text-transform: uppercase;
+      padding: .2rem .55rem; border-radius: 999px;
+      background: var(--leaf-soft); color: var(--leaf);
+      align-self: center;
+    }
+    .tag.dim { background: var(--paper-2); color: var(--muted); }
+
+    .rows { padding: .35rem .5rem .8rem; }
+    .row {
+      display: flex; align-items: center; gap: 1rem;
+      padding: .5rem .75rem;
+      border-radius: 12px;
+    }
+    .row .k { flex: none; width: 5.7rem; color: var(--muted); font-weight: 600; font-size: .98rem; }
+    .row .v { flex: 1 1 auto; min-width: 0; }
+
+    /* the copyable chip is a button so it is keyboard + tap friendly */
+    button.copy {
+      -webkit-appearance: none; appearance: none;
+      font-family: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+      font-size: 1.06rem; font-weight: 600;
+      color: var(--ink);
+      background: var(--paper-2);
+      border: 1.5px solid var(--line);
+      border-radius: 11px;
+      padding: .62rem .8rem;
+      width: 100%;
+      min-height: 48px;                 /* comfy tap target */
+      display: flex; align-items: center; justify-content: space-between; gap: .6rem;
+      cursor: pointer;
+      transition: border-color .15s, background .15s, transform .06s;
+      text-align: left;
+    }
+    button.copy:hover { border-color: var(--coral); }
+    button.copy:active { transform: scale(.985); }
+    button.copy:focus-visible { outline: 3px solid var(--coral); outline-offset: 2px; }
+    button.copy .val { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    button.copy .hint {
+      flex: none; display: inline-flex; align-items: center; gap: .3rem;
+      font-family: var(--body); font-size: .8rem; font-weight: 700;
+      color: var(--muted); letter-spacing: .02em; text-transform: uppercase;
+    }
+    button.copy .hint svg { width: 15px; height: 15px; }
+    button.copy.copied { border-color: var(--leaf); background: var(--leaf-soft); }
+    button.copy.copied .hint { color: var(--leaf); }
+
+    /* plain (non-copy) value, e.g. "SSL/TLS" */
+    .plain {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 1.02rem; font-weight: 600; color: var(--ink);
+      padding: .62rem .2rem;
+      display: inline-block;
+    }
+    .note-inline { color: var(--muted); font-size: .95rem; padding: 0 1.25rem 1.15rem; margin: 0; }
+
+    /* ---- IMAP vs POP3 --------------------------------------------------- */
+    .compare { display: grid; gap: 1rem; }
+    @media (min-width: 560px) { .compare { grid-template-columns: 1fr 1fr; } }
+    .compare .card { padding: 1.35rem 1.3rem; }
+    .compare h3 { display: flex; align-items: center; gap: .55rem; margin-bottom: .5rem; }
+    .compare .pick {
+      font-family: var(--body); font-size: .72rem; font-weight: 800; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--leaf);
+      background: var(--leaf-soft); padding: .15rem .5rem; border-radius: 999px;
+    }
+    .compare .best { border-color: color-mix(in srgb, var(--leaf) 45%, var(--line)); }
+    .compare p { font-size: 1.04rem; margin: 0; color: var(--muted); }
+    .compare p strong { color: var(--ink); }
+
+    /* ---- Steps ---------------------------------------------------------- */
+    ol.steps { list-style: none; counter-reset: step; margin: 0; padding: 0; display: grid; gap: .8rem; }
+    ol.steps li {
+      counter-increment: step;
+      display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: start;
+      background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-sm);
+      padding: 1.05rem 1.2rem 1.05rem 1rem;
+      box-shadow: var(--shadow-sm);
+    }
+    ol.steps li::before {
+      content: counter(step);
+      font-family: var(--display); font-weight: 600; font-size: 1.15rem;
+      width: 2.2rem; height: 2.2rem; flex: none;
+      display: grid; place-items: center;
+      color: #fff; background: var(--coral);
+      border-radius: 50%;
+      box-shadow: 0 4px 10px -3px var(--coral);
+    }
+    ol.steps li .st { align-self: center; }
+    ol.steps li .st b { font-weight: 700; }
+    ol.steps code {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      background: var(--paper-2); border: 1px solid var(--line);
+      padding: .06em .4em; border-radius: 7px; font-size: .92em; font-weight: 600;
+      white-space: nowrap;
+    }
+
+    /* ---- Webmail fallback ---------------------------------------------- */
+    .fallback {
+      background: linear-gradient(135deg, var(--coral) 0%, #d1512f 100%);
+      color: #fff; border-radius: var(--radius);
+      padding: 1.6rem 1.5rem;
+      box-shadow: var(--shadow);
+    }
+    .fallback h2 { color: #fff; }
+    .fallback p { color: rgba(255,255,255,.9); margin-bottom: 1.15rem; }
+    .btn {
+      display: inline-flex; align-items: center; gap: .55rem;
+      background: #fff; color: #b6431f;
+      font-weight: 700; font-size: 1.1rem;
+      text-decoration: none;
+      padding: .85rem 1.4rem; border-radius: 999px;
+      min-height: 52px;
+      box-shadow: 0 8px 20px -8px rgba(0,0,0,.4);
+      transition: transform .1s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn:active { transform: translateY(0); }
+
+    footer {
+      margin-top: 3.5rem; padding-top: 1.6rem; border-top: 1px solid var(--line);
+      color: var(--muted); font-size: 1rem; text-align: center;
+    }
+    footer .heart { color: var(--coral); }
+
+    /* ---- Toast ---------------------------------------------------------- */
+    #toast {
+      position: fixed; left: 50%; bottom: 1.5rem; transform: translate(-50%, 2rem);
+      background: var(--ink); color: var(--paper);
+      font-weight: 600; font-size: 1rem;
+      padding: .7rem 1.2rem; border-radius: 999px;
+      box-shadow: 0 14px 30px -10px rgba(0,0,0,.5);
+      opacity: 0; pointer-events: none;
+      transition: opacity .22s, transform .22s;
+      z-index: 50;
+      display: flex; align-items: center; gap: .5rem;
+    }
+    #toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    /* ---- Entrance motion ------------------------------------------------ */
+    .rise { opacity: 0; transform: translateY(14px); animation: rise .6s cubic-bezier(.2,.7,.3,1) forwards; }
+    @keyframes rise { to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) {
+      .rise { animation: none; opacity: 1; transform: none; }
+      button.copy, .btn { transition: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <header class="rise" style="animation-delay:.02s">
+      <p class="eyebrow">harleypig.com email</p>
+      <h1>Let's get your email<br><span class="accent">on your phone</span> 📱</h1>
+      <p class="lead">It takes about two minutes. You don't need to know
+        anything techy — just follow along and copy the bits in the boxes.</p>
+    </header>
+
+    <div class="callout rise" style="animation-delay:.08s; margin-top:1.8rem">
+      <span class="ico" aria-hidden="true">🔑</span>
+      <p style="margin:0">Before you start, grab two things: <strong>your email
+        address</strong> (it ends in <code style="font-weight:700">@harleypig.com</code>)
+        and <strong>your password</strong>. If you don't have them, ask Dad.</p>
+    </div>
+
+    <!-- ================= SETTINGS ================= -->
+    <section class="rise" style="animation-delay:.14s">
+      <h2>The settings</h2>
+      <p style="color:var(--muted); margin-bottom:1.3rem">Your phone will ask
+        you for these. <strong style="color:var(--ink)">Tap any box to copy
+        it</strong>, then paste it in. They're the same for everyone —
+        only your email and password are yours.</p>
+
+      <div class="settings">
+        <!-- Incoming: IMAP -->
+        <div class="box">
+          <header>
+            <h3>Incoming mail</h3>
+            <span class="sub">IMAP</span>
+            <span class="tag">Use this one</span>
+          </header>
+          <div class="rows">
+            <div class="row">
+              <span class="k">Server</span>
+              <span class="v">
+                <button class="copy" data-copy="mail.harleypig.com">
+                  <span class="val">mail.harleypig.com</span>
+                  <span class="hint" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                         stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    Copy
+                  </span>
+                </button>
+              </span>
+            </div>
+            <div class="row">
+              <span class="k">Port</span>
+              <span class="v">
+                <button class="copy" data-copy="993">
+                  <span class="val">993</span>
+                  <span class="hint" aria-hidden="true">Copy</span>
+                </button>
+              </span>
+            </div>
+            <div class="row">
+              <span class="k">Security</span>
+              <span class="v"><span class="plain">SSL / TLS</span></span>
+            </div>
+            <div class="row">
+              <span class="k">Username</span>
+              <span class="v"><span class="plain">your full email</span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Outgoing: SMTP -->
+        <div class="box">
+          <header>
+            <h3>Outgoing mail</h3>
+            <span class="sub">SMTP</span>
+          </header>
+          <div class="rows">
+            <div class="row">
+              <span class="k">Server</span>
+              <span class="v">
+                <button class="copy" data-copy="mail.harleypig.com">
+                  <span class="val">mail.harleypig.com</span>
+                  <span class="hint" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                         stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    Copy
+                  </span>
+                </button>
+              </span>
+            </div>
+            <div class="row">
+              <span class="k">Port</span>
+              <span class="v">
+                <button class="copy" data-copy="465">
+                  <span class="val">465</span>
+                  <span class="hint" aria-hidden="true">Copy</span>
+                </button>
+              </span>
+            </div>
+            <div class="row">
+              <span class="k">Security</span>
+              <span class="v"><span class="plain">SSL / TLS</span></span>
+            </div>
+          </div>
+          <p class="note-inline">If your app won't accept port 465, use
+            <strong style="color:var(--ink)">587</strong> with
+            “STARTTLS” instead — either works.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= IMAP vs POP3 ================= -->
+    <section class="rise" style="animation-delay:.06s">
+      <h2>IMAP or POP3?</h2>
+      <p style="color:var(--muted); margin-bottom:1.3rem">Some apps ask you to
+        pick one. Here's the short version — when in doubt, pick IMAP.</p>
+      <div class="compare">
+        <div class="card best">
+          <h3>📥 IMAP <span class="pick">Pick this</span></h3>
+          <p>Your mail lives <strong>on the server</strong>, so it looks the
+            same on every device — your phone, a tablet, a laptop. Read it in
+            one place, it's read everywhere. This is what you want.</p>
+        </div>
+        <div class="card">
+          <h3>📦 POP3</h3>
+          <p>Only use this if your app <strong>doesn't offer IMAP</strong>.
+            POP3 <strong>downloads mail onto one device</strong> and usually
+            removes it from the server — so it won't show up anywhere else.
+            Same server, but use port <code style="white-space:nowrap">995</code>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= GMAIL APP STEPS ================= -->
+    <section class="rise" style="animation-delay:.06s">
+      <h2>Step by step in the Gmail app</h2>
+      <p style="color:var(--muted); margin-bottom:1.4rem">The Gmail app comes
+        on most Android phones and can hold your harleypig.com email too.
+        Here's the whole thing:</p>
+      <ol class="steps">
+        <li><span class="st">Open the <b>Gmail</b> app. Tap your
+          <b>profile picture</b> in the top-right corner.</span></li>
+        <li><span class="st">Tap <b>Add another account</b>.</span></li>
+        <li><span class="st">Choose <b>Other</b> — <em>not</em> Google.</span></li>
+        <li><span class="st">Type your full email address
+          (<code>you@harleypig.com</code>) and tap <b>Next</b>.</span></li>
+        <li><span class="st">Choose <b>Personal (IMAP)</b>, then <b>Next</b>.</span></li>
+        <li><span class="st">Type your <b>password</b> and tap <b>Next</b>.</span></li>
+        <li><span class="st">If it asks for an <b>incoming</b> or <b>outgoing
+          server</b>, put in <code>mail.harleypig.com</code> (copy it
+          from the boxes above) and tap <b>Next</b>.</span></li>
+        <li><span class="st">That's it — you're done! 🎉 Give it a minute and
+          your mail will show up.</span></li>
+      </ol>
+    </section>
+
+    <!-- ================= WEBMAIL FALLBACK ================= -->
+    <section class="rise" style="animation-delay:.06s">
+      <div class="fallback">
+        <h2>Don't want to set up an app?</h2>
+        <p>You can always just read your mail in a web browser — nothing to
+          install, nothing to type in. Log in with your email and password.</p>
+        <a class="btn" href="https://webmail.harleypig.com">
+          Open webmail
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <footer>
+      <p>Stuck on any step? That's normal — just ask Dad and he'll sort it
+        out. <span class="heart">♥</span></p>
+    </footer>
+  </main>
+
+  <div id="toast" role="status" aria-live="polite">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+    <span id="toast-text">Copied!</span>
+  </div>
+
+  <script>
+    // Tap-to-copy: write the value to the clipboard, flash the button, and
+    // pop a little confirmation toast. Falls back gracefully on old browsers.
+    const toast = document.getElementById("toast");
+    const toastText = document.getElementById("toast-text");
+    let toastTimer;
+
+    function showToast(msg) {
+      toastText.textContent = msg;
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove("show"), 1600);
+    }
+
+    async function copy(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        return true;
+      } catch (e) {
+        // Fallback for browsers without the async clipboard API.
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        let ok = false;
+        try { ok = document.execCommand("copy"); } catch (_) {}
+        document.body.removeChild(ta);
+        return ok;
+      }
+    }
+
+    document.querySelectorAll("button.copy").forEach((btn) => {
+      const original = btn.querySelector(".hint");
+      btn.addEventListener("click", async () => {
+        const value = btn.dataset.copy;
+        const ok = await copy(value);
+        if (!ok) { showToast("Press and hold to copy"); return; }
+        showToast("Copied " + value);
+        btn.classList.add("copied");
+        if (original) original.firstChild && (original.lastChild.textContent = " Copied");
+        setTimeout(() => {
+          btn.classList.remove("copied");
+          if (original && original.lastChild) original.lastChild.textContent = " Copy";
+        }, 1600);
+      });
+    });
+  </script>
+</body>
+</html>
