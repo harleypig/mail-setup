@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Set up Gmail in your browser</title>
+  <meta name="description"
+        content="How to send and read your harleypig.com email from Gmail on a computer, in a web browser." />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#eef2fb" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#131926" media="(prefers-color-scheme: dark)" />
+
+  <!-- Envelope favicon, inline so the page stays self-contained. -->
+  <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9C%89%EF%B8%8F%3C/text%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Figtree:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    /* ---- Tokens (shared look with the main setup page) ------------------ */
+    :root {
+      --paper:      #eef2fb;
+      --paper-2:    #f5f8fd;
+      --card:       #ffffff;
+      --ink:        #1e2735;
+      --muted:      #5b6675;
+      --line:       #dde5f2;
+      --blue:       #2f6fe0;
+      --blue-soft:  #e0eafb;
+      --leaf:       #2f8f63;
+      --leaf-soft:  #dcf0e4;
+      --wash:       #dbe7fb;
+      --shadow:     28px 28px 60px -30px rgba(30, 50, 90, .40);
+      --shadow-sm:  0 2px 0 rgba(30, 50, 90, .05), 0 10px 24px -16px rgba(30, 50, 90, .45);
+      --radius:     22px;
+      --radius-sm:  14px;
+      --display: "Fraunces", Georgia, "Times New Roman", serif;
+      --body: "Figtree", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --paper:      #131926;
+        --paper-2:    #1a2130;
+        --card:       #1f2838;
+        --ink:        #e9eef8;
+        --muted:      #a3b1c7;
+        --line:       #313d52;
+        --blue:       #5c8cf0;
+        --blue-soft:  #22304a;
+        --leaf:       #6bc596;
+        --leaf-soft:  #1f3a2c;
+        --wash:       #1c2740;
+        --shadow:     28px 28px 60px -30px rgba(0, 0, 0, .6);
+        --shadow-sm:  0 2px 0 rgba(0, 0, 0, .25), 0 12px 26px -16px rgba(0, 0, 0, .7);
+      }
+    }
+
+    /* ---- Reset / base --------------------------------------------------- */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+
+    body {
+      margin: 0;
+      font-family: var(--body);
+      font-size: 1.18rem;
+      line-height: 1.65;
+      color: var(--ink);
+      background: var(--paper);
+      background-image:
+        radial-gradient(120% 80% at 50% -10%, var(--wash) 0%, transparent 55%),
+        radial-gradient(90% 60% at 108% 8%, var(--blue-soft) 0%, transparent 45%);
+      background-attachment: fixed;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    main {
+      width: min(680px, 100% - 2.2rem);
+      margin-inline: auto;
+      padding: clamp(2.2rem, 8vw, 4rem) 0 4.5rem;
+    }
+
+    /* ---- Type ----------------------------------------------------------- */
+    h1, h2, h3 { font-family: var(--display); font-weight: 600; line-height: 1.08; margin: 0; }
+    h1 {
+      font-size: clamp(2.4rem, 10vw, 3.4rem);
+      letter-spacing: -.015em;
+      margin-bottom: .5rem;
+    }
+    h1 .accent { color: var(--blue); font-style: italic; }
+    h2 { font-size: clamp(1.7rem, 6.5vw, 2.15rem); letter-spacing: -.01em; margin-bottom: .35rem; }
+    h3 { font-size: 1.22rem; font-weight: 600; }
+    p { margin: 0 0 1rem; }
+    .lead { font-size: 1.32rem; color: var(--muted); font-weight: 500; }
+    .subtitle { font-size: 1.12rem; color: var(--muted); font-weight: 600; margin: 0 0 .8rem; }
+    a { color: var(--blue); font-weight: 600; text-underline-offset: 3px; }
+
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: .55rem;
+      font-weight: 700; font-size: .82rem; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--blue);
+      margin: 0 0 1.1rem;
+    }
+    .eyebrow::before {
+      content: ""; width: 1.9rem; height: 2px; background: var(--blue); border-radius: 2px;
+    }
+
+    .back { display: inline-block; margin-bottom: 1.3rem; font-size: 1rem; }
+    section { margin-top: clamp(2.6rem, 8vw, 3.6rem); }
+
+    /* the little "Part A / Part B" kicker above a section heading */
+    .part {
+      font-weight: 800; font-size: .8rem; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--blue); margin: 0 0 .35rem;
+    }
+
+    /* ---- Callout -------------------------------------------------------- */
+    .callout {
+      display: flex; gap: .95rem; align-items: flex-start;
+      background: var(--paper-2);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 1.05rem 1.15rem;
+      font-size: 1.06rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .callout .ico { font-size: 1.5rem; line-height: 1.2; flex: none; }
+    .callout strong { color: var(--ink); }
+
+    /* the "easy way" tip gets a gentle green tint */
+    .callout.tip { background: var(--leaf-soft); border-color: color-mix(in srgb, var(--leaf) 35%, var(--line)); }
+
+    /* ---- Code ----------------------------------------------------------- */
+    code {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      background: var(--paper-2); border: 1px solid var(--line);
+      padding: .06em .4em; border-radius: 7px; font-size: .92em; font-weight: 600;
+    }
+
+    /* ---- Settings mini-table (for Send mail as) ------------------------- */
+    .settings {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: var(--radius-sm); box-shadow: var(--shadow-sm);
+      padding: .4rem .3rem; margin: 1.1rem 0 0;
+    }
+    .settings .row {
+      display: flex; align-items: baseline; gap: 1rem;
+      padding: .55rem .85rem;
+    }
+    .settings .row + .row { border-top: 1px solid var(--line); }
+    .settings .k { flex: none; width: 8rem; color: var(--muted); font-weight: 600; font-size: 1rem; }
+    .settings .v { flex: 1 1 auto; min-width: 0; }
+
+    /* ---- Steps ---------------------------------------------------------- */
+    ol.steps { list-style: none; counter-reset: step; margin: 0; padding: 0; display: grid; gap: .8rem; }
+    ol.steps li {
+      counter-increment: step;
+      display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: start;
+      background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-sm);
+      padding: 1.05rem 1.2rem 1.05rem 1rem;
+      box-shadow: var(--shadow-sm);
+    }
+    ol.steps li::before {
+      content: counter(step);
+      font-family: var(--display); font-weight: 600; font-size: 1.15rem;
+      width: 2.2rem; height: 2.2rem; flex: none;
+      display: grid; place-items: center;
+      color: #fff; background: var(--blue);
+      border-radius: 50%;
+      box-shadow: 0 4px 10px -3px var(--blue);
+    }
+    ol.steps li .st { align-self: center; }
+    ol.steps li .st b { font-weight: 700; }
+
+    /* ---- Help banner ---------------------------------------------------- */
+    .help {
+      background: linear-gradient(135deg, var(--blue) 0%, #1e56c8 100%);
+      color: #fff; border-radius: var(--radius);
+      padding: 1.6rem 1.5rem;
+      box-shadow: var(--shadow);
+    }
+    .help h2 { color: #fff; }
+    .help p { color: rgba(255,255,255,.92); margin: 0; }
+    .help a { color: #fff; text-decoration: underline; }
+
+    footer {
+      margin-top: 3.5rem; padding-top: 1.6rem; border-top: 1px solid var(--line);
+      color: var(--muted); font-size: 1rem; text-align: center;
+    }
+    footer .heart { color: var(--blue); }
+
+    /* ---- Entrance motion ------------------------------------------------ */
+    .rise { opacity: 0; transform: translateY(14px); animation: rise .6s cubic-bezier(.2,.7,.3,1) forwards; }
+    @keyframes rise { to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) {
+      .rise { animation: none; opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <header class="rise" style="animation-delay:.02s">
+      <a class="back" href="./">← Back to email setup</a>
+      <p class="eyebrow">harleypig.com email</p>
+      <h1>Gmail in a <span class="accent">browser</span> 💻</h1>
+      <p class="subtitle">Gmail on a computer, at <code>gmail.com</code>.</p>
+      <p class="lead">Heads up: this is the fussy one. Gmail's <em>website</em>
+        can't simply "hold" an outside email account the way the phone app can —
+        Google took that option away. So we do it in two little pieces. It's not
+        hard, just a few clicks.</p>
+    </header>
+
+    <!-- ================= THE EASIER WAY FIRST ================= -->
+    <div class="callout tip rise" style="animation-delay:.08s; margin-top:1.8rem">
+      <span class="ico" aria-hidden="true">💡</span>
+      <p style="margin:0"><strong>Honest tip:</strong> if this feels like a lot,
+        the easy paths are still open — use the
+        <a href="gmail-app.html">Gmail app on your phone</a>, or just read your
+        mail at <a href="https://webmail.harleypig.com">webmail.harleypig.com</a>
+        (nothing to set up). Only keep going below if you really want your
+        harleypig.com mail inside your existing Gmail on the computer.</p>
+    </div>
+
+    <!-- ================= WHY IT'S DIFFERENT ================= -->
+    <section class="rise" style="animation-delay:.1s">
+      <h2>Why the website is different</h2>
+      <p style="color:var(--muted)">On the Gmail website, clicking your
+        <b>profile picture</b> and choosing <b>Add another account</b> only adds
+        another <em>Google</em> account — it won't take your harleypig.com
+        address. That's not you doing it wrong; Google simply removed the "check
+        mail from an outside account" feature from the website. So instead we
+        set up two small things: one so you can <b>send</b> as harleypig.com, and
+        one so your harleypig.com mail <b>shows up</b> in your inbox.</p>
+    </section>
+
+    <!-- ================= PART A: SEND AS ================= -->
+    <section class="rise" style="animation-delay:.12s">
+      <p class="part">Part A · Send as harleypig.com</p>
+      <h2>Let Gmail send from your address</h2>
+      <p style="color:var(--muted); margin-bottom:1.3rem">This lets you write a
+        message and have it go out <em>from</em> your harleypig.com address,
+        right inside Gmail.</p>
+
+      <ol class="steps">
+        <li><span class="st">In Gmail, click the <b>gear</b> ⚙️ in the top-right,
+          then <b>See all settings</b>.</span></li>
+        <li><span class="st">Click the <b>Accounts and Import</b> tab.</span></li>
+        <li><span class="st">Find <b>Send mail as</b> and click <b>Add another
+          email address</b>.</span></li>
+        <li><span class="st">Put in your name and your full harleypig.com
+          address (<code>you@harleypig.com</code>), then <b>Next</b>.</span></li>
+        <li><span class="st">Gmail asks for your <b>outgoing (SMTP) server</b>.
+          Fill it in with the settings just below and click <b>Add
+          Account</b>.</span></li>
+        <li><span class="st">Gmail sends a short <b>confirmation code</b> to your
+          harleypig.com address. Read it at
+          <a href="https://webmail.harleypig.com">webmail.harleypig.com</a>,
+          then type the code in. Done — when you write a new message you can now
+          pick your harleypig.com address in the <b>From</b> line.</span></li>
+      </ol>
+
+      <div class="settings" aria-label="Outgoing mail settings">
+        <div class="row"><span class="k">SMTP server</span>
+          <span class="v"><code>mail.harleypig.com</code></span></div>
+        <div class="row"><span class="k">Port</span>
+          <span class="v"><code>465</code> &nbsp;(SSL) &nbsp;— or <code>587</code> with TLS</span></div>
+        <div class="row"><span class="k">Username</span>
+          <span class="v">your full email address</span></div>
+        <div class="row"><span class="k">Password</span>
+          <span class="v">your new email password</span></div>
+      </div>
+      <div class="callout" style="margin-top:1rem">
+        <span class="ico" aria-hidden="true">🔒</span>
+        <p style="margin:0">If Gmail offers a choice, pick <strong>Secured
+          connection using SSL</strong>. That pairs with port <code>465</code>
+          above.</p>
+      </div>
+    </section>
+
+    <!-- ================= PART B: RECEIVE (FORWARD) ================= -->
+    <section class="rise" style="animation-delay:.14s">
+      <p class="part">Part B · See your harleypig.com mail</p>
+      <h2>Get it showing up in your inbox</h2>
+      <p style="color:var(--muted)">Because the website can't pull in an outside
+        account anymore, the reliable way to <em>see</em> your harleypig.com mail
+        in Gmail is to have it <strong style="color:var(--ink)">forwarded</strong>
+        there — a copy of every message lands in your Gmail automatically.</p>
+
+      <div class="callout tip" style="margin-top:1.1rem">
+        <span class="ico" aria-hidden="true">📨</span>
+        <p style="margin:0"><strong>Easiest:</strong> just ask me to turn on
+          forwarding to your Gmail — it takes me a minute on my end and there's
+          nothing for you to set up. Tell me which Gmail address to send it
+          to.</p>
+      </div>
+
+      <div class="callout" style="margin-top:1rem">
+        <span class="ico" aria-hidden="true">🛠️</span>
+        <p style="margin:0"><strong>Prefer to do it yourself?</strong> Log in at
+          <a href="https://webmail.harleypig.com">webmail.harleypig.com</a>, open
+          <b>Settings → Filters</b>, and add a rule that <b>redirects</b> your
+          mail to your Gmail address. If that looks fiddly, don't wrestle with it
+          — just ask me.</p>
+      </div>
+    </section>
+
+    <!-- ================= ASK ME ================= -->
+    <section class="rise" style="animation-delay:.06s">
+      <div class="help">
+        <h2>Honestly? The app or webmail is easier 🙂</h2>
+        <p>None of this is required. If the two parts above feel like too much,
+          the <a href="gmail-app.html">Gmail app</a> or
+          <a href="https://webmail.harleypig.com">webmail</a> will get you there
+          with a lot less fuss — or call me and we'll set it up together.</p>
+      </div>
+    </section>
+
+    <footer>
+      <p><a href="./">← Back to email setup</a></p>
+      <p>Stuck on any step? That's normal — just ask me and I'll sort it out.
+        <span class="heart">♥</span></p>
+    </footer>
+  </main>
+</body>
+</html>
