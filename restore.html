@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Bring your old emails back</title>
   <meta name="description"
-        content="How to load the copy of your old harleypig.com email (saved with Google Takeout) into your new email or a Gmail account." />
+        content="How to load the copy of your old harleypig.com email (saved with Google Takeout) back into your harleypig.com webmail." />
   <meta name="color-scheme" content="light dark" />
   <meta name="theme-color" content="#eef2fb" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#131926" media="(prefers-color-scheme: dark)" />
@@ -112,16 +112,6 @@
     .back { display: inline-block; margin-bottom: 1.3rem; font-size: 1rem; }
     section { margin-top: clamp(2.6rem, 8vw, 3.6rem); }
 
-    /* option label pills */
-    .pill {
-      display: inline-block;
-      font-size: .74rem; font-weight: 800; letter-spacing: .06em;
-      text-transform: uppercase;
-      padding: .22rem .62rem; border-radius: 999px; margin-bottom: .6rem;
-    }
-    .pill.good { background: var(--leaf-soft); color: var(--leaf); }
-    .pill.more { background: var(--paper-2); color: var(--muted); border: 1px solid var(--line); }
-
     /* ---- Callout -------------------------------------------------------- */
     .callout {
       display: flex; gap: .95rem; align-items: flex-start;
@@ -198,8 +188,8 @@
       <p class="subtitle">Load the copy you saved with Google Takeout into your
         email.</p>
       <p class="lead">You only need this if you want your old messages back
-        somewhere you can read them. There are two ways — pick whichever suits
-        you.</p>
+        somewhere you can read them. It's the same for everyone — you do it
+        right in your webmail.</p>
     </header>
 
     <div class="callout rise" style="animation-delay:.08s; margin-top:1.8rem">
@@ -211,69 +201,41 @@
         <code>.mbox</code> file is the one you'll load in below.</p>
     </div>
 
-    <!-- ================= OPTION 1: ROUNDCUBE (webmail) ================= -->
+    <!-- ================= IMPORT IN WEBMAIL ================= -->
     <section class="rise" style="animation-delay:.12s">
-      <span class="pill good">Easiest</span>
-      <h2>Into your harleypig.com webmail</h2>
-      <p style="color:var(--muted); margin-bottom:1.3rem">This drops your old
-        mail straight into your new mailbox, right from the webmail site.
-        Nothing to install.</p>
+      <h2>Load them into your webmail</h2>
+      <p style="color:var(--muted); margin-bottom:1.3rem">You do this right on
+        the webmail site. It doesn't matter how you read your email day to day
+        — everyone can get to webmail, so this is the one way that works for
+        all of you. Nothing to install.</p>
 
       <ol class="steps">
         <li><span class="st">Go to <code>webmail.harleypig.com</code> and log in
           with your harleypig.com email and your <b>new password</b>.</span></li>
-        <li><span class="st">At the bottom of the folder list on the left, click
-          the <b>Actions</b> button (a gear ⚙️ or a “…” menu) and choose
-          <b>Import messages</b>.</span></li>
-        <li><span class="st">Click to pick your <code>.mbox</code> file, then
-          press <b>Upload</b>.</span></li>
-        <li><span class="st">Give it a minute — your old emails show up in the
-          folder. That's it! 🎉</span></li>
+        <li><span class="st">Click your <b>Inbox</b> on the left. Then, over on
+          the top-right, click <b>More</b> (the <b>•••</b> button) and choose
+          <b>Import</b>.</span></li>
+        <li><span class="st">Pick your <code>.mbox</code> file, then click
+          <b>Import</b>.</span></li>
+        <li><span class="st">Give it a minute — your old emails show up in your
+          Inbox. That's it! 🎉</span></li>
       </ol>
 
       <div class="callout" style="margin-top:1.3rem">
         <span class="ico" aria-hidden="true">📏</span>
         <p style="margin:0">If your <code>.mbox</code> is big (roughly 50&nbsp;MB
-          or more), the upload might stall or fail. If that happens, don't fight
+          or more), the import might stall or fail. If that happens, don't fight
           it — <strong>send me the file and I'll load it for you</strong>.</p>
       </div>
-    </section>
-
-    <!-- ================= OPTION 2: GMAIL ================= -->
-    <section class="rise" style="animation-delay:.06s">
-      <span class="pill more">A bit more work</span>
-      <h2>Into a Gmail account</h2>
-      <p style="color:var(--muted); margin-bottom:1.3rem">Heads up — this one's
-        more of a project. Gmail can't take the file directly, so you use a free
-        program called <strong style="color:var(--ink)">Thunderbird</strong> as
-        a go-between. If that sounds like a lot, skip to the bottom and just send
-        me the file.</p>
-
-      <ol class="steps">
-        <li><span class="st">Download and install <b>Thunderbird</b> (it's
-          free). When it opens, add your <b>Gmail account</b> — it'll pop up the
-          normal Google sign-in.</span></li>
-        <li><span class="st">Open the menu (<b>☰</b>, top-right) →
-          <b>Add-ons and Themes</b>. Search for
-          <b>ImportExportTools&nbsp;NG</b> and add it.</span></li>
-        <li><span class="st">In the left-hand list, <b>right-click Local
-          Folders</b> → <b>ImportExportTools&nbsp;NG</b> → <b>Import mbox
-          file</b>, and pick your <code>.mbox</code> file.</span></li>
-        <li><span class="st">Your old mail appears under <b>Local Folders</b>.
-          Select those messages and <b>drag them</b> (or right-click →
-          <b>Move To</b>) into a folder in your Gmail account. Leave Thunderbird
-          open until it finishes syncing.</span></li>
-      </ol>
     </section>
 
     <!-- ================= ASK ME ================= -->
     <section class="rise" style="animation-delay:.06s">
       <div class="help">
         <h2>Rather not? 🙋</h2>
-        <p>Honestly, either of these can be fiddly, and there's no shame in
+        <p>Honestly, importing can be a little fiddly, and there's no shame in
           skipping it. Send me the file you saved and I'll load your old email
-          in for you — into your harleypig.com mailbox or a Gmail account, your
-          choice.</p>
+          back in for you.</p>
       </div>
     </section>
 
