@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bring your old emails back</title>
+  <meta name="description"
+        content="How to load the copy of your old harleypig.com email (saved with Google Takeout) into your new email or a Gmail account." />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#eef2fb" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#131926" media="(prefers-color-scheme: dark)" />
+
+  <!-- Envelope favicon, inline so the page stays self-contained. -->
+  <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9C%89%EF%B8%8F%3C/text%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Figtree:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    /* ---- Tokens (shared look with the main setup page) ------------------ */
+    :root {
+      --paper:      #eef2fb;
+      --paper-2:    #f5f8fd;
+      --card:       #ffffff;
+      --ink:        #1e2735;
+      --muted:      #5b6675;
+      --line:       #dde5f2;
+      --blue:       #2f6fe0;
+      --blue-soft:  #e0eafb;
+      --leaf:       #2f8f63;
+      --leaf-soft:  #dcf0e4;
+      --wash:       #dbe7fb;
+      --shadow:     28px 28px 60px -30px rgba(30, 50, 90, .40);
+      --shadow-sm:  0 2px 0 rgba(30, 50, 90, .05), 0 10px 24px -16px rgba(30, 50, 90, .45);
+      --radius:     22px;
+      --radius-sm:  14px;
+      --display: "Fraunces", Georgia, "Times New Roman", serif;
+      --body: "Figtree", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --paper:      #131926;
+        --paper-2:    #1a2130;
+        --card:       #1f2838;
+        --ink:        #e9eef8;
+        --muted:      #a3b1c7;
+        --line:       #313d52;
+        --blue:       #5c8cf0;
+        --blue-soft:  #22304a;
+        --leaf:       #6bc596;
+        --leaf-soft:  #1f3a2c;
+        --wash:       #1c2740;
+        --shadow:     28px 28px 60px -30px rgba(0, 0, 0, .6);
+        --shadow-sm:  0 2px 0 rgba(0, 0, 0, .25), 0 12px 26px -16px rgba(0, 0, 0, .7);
+      }
+    }
+
+    /* ---- Reset / base --------------------------------------------------- */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+
+    body {
+      margin: 0;
+      font-family: var(--body);
+      font-size: 1.18rem;
+      line-height: 1.65;
+      color: var(--ink);
+      background: var(--paper);
+      background-image:
+        radial-gradient(120% 80% at 50% -10%, var(--wash) 0%, transparent 55%),
+        radial-gradient(90% 60% at 108% 8%, var(--blue-soft) 0%, transparent 45%);
+      background-attachment: fixed;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    main {
+      width: min(680px, 100% - 2.2rem);
+      margin-inline: auto;
+      padding: clamp(2.2rem, 8vw, 4rem) 0 4.5rem;
+    }
+
+    /* ---- Type ----------------------------------------------------------- */
+    h1, h2, h3 { font-family: var(--display); font-weight: 600; line-height: 1.08; margin: 0; }
+    h1 {
+      font-size: clamp(2.4rem, 10vw, 3.4rem);
+      letter-spacing: -.015em;
+      margin-bottom: .5rem;
+    }
+    h1 .accent { color: var(--blue); font-style: italic; }
+    h2 { font-size: clamp(1.7rem, 6.5vw, 2.15rem); letter-spacing: -.01em; margin-bottom: .35rem; }
+    p { margin: 0 0 1rem; }
+    .lead { font-size: 1.32rem; color: var(--muted); font-weight: 500; }
+    .subtitle { font-size: 1.12rem; color: var(--muted); font-weight: 600; margin: 0 0 .8rem; }
+    a { color: var(--blue); font-weight: 600; text-underline-offset: 3px; }
+
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: .55rem;
+      font-weight: 700; font-size: .82rem; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--blue);
+      margin: 0 0 1.1rem;
+    }
+    .eyebrow::before {
+      content: ""; width: 1.9rem; height: 2px; background: var(--blue); border-radius: 2px;
+    }
+
+    .back { display: inline-block; margin-bottom: 1.3rem; font-size: 1rem; }
+    section { margin-top: clamp(2.6rem, 8vw, 3.6rem); }
+
+    /* option label pills */
+    .pill {
+      display: inline-block;
+      font-size: .74rem; font-weight: 800; letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: .22rem .62rem; border-radius: 999px; margin-bottom: .6rem;
+    }
+    .pill.good { background: var(--leaf-soft); color: var(--leaf); }
+    .pill.more { background: var(--paper-2); color: var(--muted); border: 1px solid var(--line); }
+
+    /* ---- Callout -------------------------------------------------------- */
+    .callout {
+      display: flex; gap: .95rem; align-items: flex-start;
+      background: var(--paper-2);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 1.05rem 1.15rem;
+      font-size: 1.06rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .callout .ico { font-size: 1.5rem; line-height: 1.2; flex: none; }
+    .callout strong { color: var(--ink); }
+
+    /* ---- Code ----------------------------------------------------------- */
+    code {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      background: var(--paper-2); border: 1px solid var(--line);
+      padding: .06em .4em; border-radius: 7px; font-size: .92em; font-weight: 600;
+    }
+
+    /* ---- Steps ---------------------------------------------------------- */
+    ol.steps { list-style: none; counter-reset: step; margin: 0; padding: 0; display: grid; gap: .8rem; }
+    ol.steps li {
+      counter-increment: step;
+      display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: start;
+      background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-sm);
+      padding: 1.05rem 1.2rem 1.05rem 1rem;
+      box-shadow: var(--shadow-sm);
+    }
+    ol.steps li::before {
+      content: counter(step);
+      font-family: var(--display); font-weight: 600; font-size: 1.15rem;
+      width: 2.2rem; height: 2.2rem; flex: none;
+      display: grid; place-items: center;
+      color: #fff; background: var(--blue);
+      border-radius: 50%;
+      box-shadow: 0 4px 10px -3px var(--blue);
+    }
+    ol.steps li .st { align-self: center; }
+    ol.steps li .st b { font-weight: 700; }
+
+    /* ---- Help banner ---------------------------------------------------- */
+    .help {
+      background: linear-gradient(135deg, var(--blue) 0%, #1e56c8 100%);
+      color: #fff; border-radius: var(--radius);
+      padding: 1.6rem 1.5rem;
+      box-shadow: var(--shadow);
+    }
+    .help h2 { color: #fff; }
+    .help p { color: rgba(255,255,255,.92); margin: 0; }
+
+    footer {
+      margin-top: 3.5rem; padding-top: 1.6rem; border-top: 1px solid var(--line);
+      color: var(--muted); font-size: 1rem; text-align: center;
+    }
+    footer .heart { color: var(--blue); }
+
+    /* ---- Entrance motion ------------------------------------------------ */
+    .rise { opacity: 0; transform: translateY(14px); animation: rise .6s cubic-bezier(.2,.7,.3,1) forwards; }
+    @keyframes rise { to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) {
+      .rise { animation: none; opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <header class="rise" style="animation-delay:.02s">
+      <a class="back" href="./">← Back to email setup</a>
+      <p class="eyebrow">harleypig.com email</p>
+      <h1>Bring your old emails <span class="accent">back</span> 📥</h1>
+      <p class="subtitle">Load the copy you saved with Google Takeout into your
+        email.</p>
+      <p class="lead">You only need this if you want your old messages back
+        somewhere you can read them. There are two ways — pick whichever suits
+        you.</p>
+    </header>
+
+    <div class="callout rise" style="animation-delay:.08s; margin-top:1.8rem">
+      <span class="ico" aria-hidden="true">📦</span>
+      <p style="margin:0">Do this <strong>after the switch</strong>, once your
+        new email is working. Grab the Takeout download you saved before Friday
+        — it's a <code>.zip</code> file. <strong>Unzip it first</strong>;
+        inside is a file whose name ends in <code>.mbox</code>. That
+        <code>.mbox</code> file is the one you'll load in below.</p>
+    </div>
+
+    <!-- ================= OPTION 1: ROUNDCUBE (webmail) ================= -->
+    <section class="rise" style="animation-delay:.12s">
+      <span class="pill good">Easiest</span>
+      <h2>Into your harleypig.com webmail</h2>
+      <p style="color:var(--muted); margin-bottom:1.3rem">This drops your old
+        mail straight into your new mailbox, right from the webmail site.
+        Nothing to install.</p>
+
+      <ol class="steps">
+        <li><span class="st">Go to <code>webmail.harleypig.com</code> and log in
+          with your harleypig.com email and your <b>new password</b>.</span></li>
+        <li><span class="st">At the bottom of the folder list on the left, click
+          the <b>Actions</b> button (a gear ⚙️ or a “…” menu) and choose
+          <b>Import messages</b>.</span></li>
+        <li><span class="st">Click to pick your <code>.mbox</code> file, then
+          press <b>Upload</b>.</span></li>
+        <li><span class="st">Give it a minute — your old emails show up in the
+          folder. That's it! 🎉</span></li>
+      </ol>
+
+      <div class="callout" style="margin-top:1.3rem">
+        <span class="ico" aria-hidden="true">📏</span>
+        <p style="margin:0">If your <code>.mbox</code> is big (roughly 50&nbsp;MB
+          or more), the upload might stall or fail. If that happens, don't fight
+          it — <strong>send me the file and I'll load it for you</strong>.</p>
+      </div>
+    </section>
+
+    <!-- ================= OPTION 2: GMAIL ================= -->
+    <section class="rise" style="animation-delay:.06s">
+      <span class="pill more">A bit more work</span>
+      <h2>Into a Gmail account</h2>
+      <p style="color:var(--muted); margin-bottom:1.3rem">Heads up — this one's
+        more of a project. Gmail can't take the file directly, so you use a free
+        program called <strong style="color:var(--ink)">Thunderbird</strong> as
+        a go-between. If that sounds like a lot, skip to the bottom and just send
+        me the file.</p>
+
+      <ol class="steps">
+        <li><span class="st">Download and install <b>Thunderbird</b> (it's
+          free). When it opens, add your <b>Gmail account</b> — it'll pop up the
+          normal Google sign-in.</span></li>
+        <li><span class="st">Open the menu (<b>☰</b>, top-right) →
+          <b>Add-ons and Themes</b>. Search for
+          <b>ImportExportTools&nbsp;NG</b> and add it.</span></li>
+        <li><span class="st">In the left-hand list, <b>right-click Local
+          Folders</b> → <b>ImportExportTools&nbsp;NG</b> → <b>Import mbox
+          file</b>, and pick your <code>.mbox</code> file.</span></li>
+        <li><span class="st">Your old mail appears under <b>Local Folders</b>.
+          Select those messages and <b>drag them</b> (or right-click →
+          <b>Move To</b>) into a folder in your Gmail account. Leave Thunderbird
+          open until it finishes syncing.</span></li>
+      </ol>
+    </section>
+
+    <!-- ================= ASK ME ================= -->
+    <section class="rise" style="animation-delay:.06s">
+      <div class="help">
+        <h2>Rather not? 🙋</h2>
+        <p>Honestly, either of these can be fiddly, and there's no shame in
+          skipping it. Send me the file you saved and I'll load your old email
+          in for you — into your harleypig.com mailbox or a Gmail account, your
+          choice.</p>
+      </div>
+    </section>
+
+    <footer>
+      <p><a href="./">← Back to email setup</a></p>
+      <p>Stuck on any step? That's normal — just ask me and I'll sort it out.
+        <span class="heart">♥</span></p>
+    </footer>
+  </main>
+</body>
+</html>
