@@ -163,6 +163,31 @@
     .callout .ico { font-size: 1.5rem; line-height: 1.2; flex: none; }
     .callout strong { color: var(--ink); }
 
+    /* ---- Link card (prominent "read this" pointer) --------------------- */
+    .linkcard {
+      display: flex; gap: .95rem; align-items: center;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--blue);
+      border-radius: var(--radius-sm);
+      padding: 1.05rem 1.2rem;
+      box-shadow: var(--shadow-sm);
+      text-decoration: none;
+      transition: border-color .15s, transform .06s;
+    }
+    .linkcard:hover { border-color: var(--blue); transform: translateY(-1px); }
+    .linkcard .ico { font-size: 1.6rem; line-height: 1.2; flex: none; }
+    .linkcard .lc-text { flex: 1 1 auto; min-width: 0; }
+    .linkcard .lc-title {
+      display: block; font-family: var(--body); font-weight: 700;
+      font-size: 1.15rem; color: var(--ink); line-height: 1.3;
+    }
+    .linkcard .lc-sub {
+      display: block; color: var(--muted); font-size: 1rem; font-weight: 500;
+      margin-top: .2rem; line-height: 1.45;
+    }
+    .linkcard .lc-arrow { flex: none; color: var(--blue); }
+
     /* ---- Settings block: tap-to-copy ------------------------------------ */
     .settings { display: grid; gap: 1.1rem; }
 
@@ -346,7 +371,22 @@
         just follow along.</p>
     </header>
 
-    <div class="phase before rise" style="animation-delay:.08s; margin-top:2rem">
+    <!-- ================= GOOGLE LOGINS (link) ================= -->
+    <a class="linkcard rise" href="google-account.html"
+       style="animation-delay:.05s; margin-top:1.7rem">
+      <span class="ico" aria-hidden="true">▶️</span>
+      <span class="lc-text">
+        <span class="lc-title">What's going to happen to my logins to Google
+          services?</span>
+        <span class="lc-sub">YouTube, Google Photos, and signing in to other
+          sites with Google — here's what stays and what changes.</span>
+      </span>
+      <svg class="lc-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+           stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </a>
+
+    <div class="phase before rise" style="animation-delay:.1s; margin-top:1.6rem">
       <p class="kicker">Part 1 · Do this now</p>
       <h2>Before the switch</h2>
       <p class="when">While your old email still exists — before Friday,
