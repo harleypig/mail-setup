@@ -119,6 +119,28 @@
 
     section { margin-top: clamp(2.6rem, 8vw, 3.6rem); }
 
+    /* ---- Phase dividers (Before / After the switch) -------------------- */
+    .phase {
+      margin-top: clamp(2.8rem, 9vw, 4.2rem);
+      padding: 1.5rem 1.5rem 1.6rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-sm);
+    }
+    .phase.before { background: linear-gradient(135deg, var(--blue-soft), var(--wash)); }
+    .phase.after {
+      background: var(--leaf-soft);
+      border-color: color-mix(in srgb, var(--leaf) 35%, var(--line));
+    }
+    .phase .kicker {
+      font-weight: 800; font-size: .8rem; letter-spacing: .12em;
+      text-transform: uppercase; margin: 0 0 .45rem;
+    }
+    .phase.before .kicker { color: var(--blue); }
+    .phase.after  .kicker { color: var(--leaf); }
+    .phase h2 { font-size: clamp(2rem, 8vw, 2.7rem); margin-bottom: .3rem; }
+    .phase .when { margin: 0; color: var(--muted); font-weight: 600; font-size: 1.08rem; }
+
     /* ---- Cards ---------------------------------------------------------- */
     .card {
       background: var(--card);
@@ -316,27 +338,30 @@
       <h1>Let's get your email<br><span class="accent">on your phone</span> 📱</h1>
       <p class="subtitle">Phone, tablet, or computer — these steps work on any
         device with an email app.</p>
-      <p class="lead">It takes about two minutes. You don't need to know
-        anything techy — just follow along and copy the bits in the boxes.</p>
+      <p class="lead">There are two parts.
+        <strong style="color:var(--ink)">Before</strong> the switch, save a
+        copy of your old email. Then
+        <strong style="color:var(--ink)">after</strong> the switch, set up your
+        new email on your phone. You don't need to know anything techy — just
+        follow along.</p>
     </header>
 
-    <div class="callout rise" style="animation-delay:.08s; margin-top:1.8rem">
-      <span class="ico" aria-hidden="true">🔑</span>
-      <p style="margin:0">Before you start, just have your
-        <strong>password</strong> handy. Your email address stays the same —
-        the one ending in <code style="font-weight:700">@harleypig.com</code>
-        that you already know. Don't have your password? Just ask me.</p>
+    <div class="phase before rise" style="animation-delay:.08s; margin-top:2rem">
+      <p class="kicker">Part 1 · Do this now</p>
+      <h2>Before the switch</h2>
+      <p class="when">While your old email still exists — before Friday,
+        July&nbsp;24.</p>
     </div>
 
-    <!-- ================= KEEP OLD EMAIL (MIGRATE) ================= -->
+    <!-- ================= SAVE OLD EMAIL (BACK UP) ================= -->
     <section class="rise" style="animation-delay:.11s">
-      <h2>Keep your old emails 📦</h2>
-      <p style="color:var(--muted); margin-bottom:1rem">Your old messages are
-        still sitting in the <em>current</em> harleypig.com mailbox. When we
-        switch over, that old mailbox goes away — so if there are emails you
-        want to keep, save a copy of them first. The easiest place to keep
-        them is a regular Gmail account: a new free one, or one you already
-        use.</p>
+      <h2>Save your old emails 📦</h2>
+      <p style="color:var(--muted); margin-bottom:1rem">Your old messages live
+        in your <em>current</em> harleypig.com mailbox. When we switch over,
+        that old mailbox goes away — so if there are emails you want to keep,
+        download a copy of them first with <strong style="color:var(--ink)">Google
+        Takeout</strong>, Google's own free backup tool. It bundles all your
+        mail into one file you can hang onto.</p>
 
       <div class="callout"
            style="border-color: color-mix(in srgb, var(--blue) 45%, var(--line)); background: var(--wash); margin-bottom:1.4rem">
@@ -347,33 +372,56 @@
           leave it to the last minute.</p>
       </div>
 
-      <p style="color:var(--muted); margin-bottom:1.4rem">Gmail can pull a
-        copy of your old mail over for you. You'll do this part on a
-        <strong style="color:var(--ink)">computer</strong> (it's not in the
-        phone app):</p>
+      <p style="color:var(--muted); margin-bottom:1.4rem">Do this on a
+        <strong style="color:var(--ink)">computer</strong>, signed in to your
+        <strong style="color:var(--ink)">harleypig.com</strong> account:</p>
 
       <ol class="steps">
-        <li><span class="st">Sign in to the <b>Gmail account</b> where you want
-          to keep your old email. Open <b>Settings</b> (the gear ⚙️ in the
-          top-right) and click <b>See all settings</b>.</span></li>
-        <li><span class="st">Click the <b>Accounts and Import</b> tab.</span></li>
-        <li><span class="st">Find <b>Import mail and contacts</b> and click
-          <b>Import from another account</b>.</span></li>
-        <li><span class="st">Type your <code>you@harleypig.com</code> address and
-          the password you use for it <b>right now</b> — your current one, not
-          the new password.</span></li>
-        <li><span class="st">Leave <b>Import mail</b> checked and start it. Your
-          old messages copy over on their own — it can take a while, so just
-          let it run. 🎉</span></li>
+        <li><span class="st">Go to <code>takeout.google.com</code>. Check that
+          the little picture in the top-right corner is your
+          <b>harleypig.com</b> account — if it isn't, switch to it.</span></li>
+        <li><span class="st">Click <b>Deselect all</b> at the top. That clears
+          everything so you only grab your email.</span></li>
+        <li><span class="st">Scroll down to <b>Mail</b> and check its
+          box.</span></li>
+        <li><span class="st">Scroll to the very bottom and click <b>Next
+          step</b>.</span></li>
+        <li><span class="st">Leave it set to <b>Send download link via
+          email</b> and <b>Export once</b>, then click <b>Create
+          export</b>.</span></li>
+        <li><span class="st">Google does the work and emails you a
+          <b>download link</b> — this can take anywhere from a few minutes to a
+          few hours. Click it, download the file, and keep it somewhere safe.
+          🎉</span></li>
       </ol>
 
       <div class="callout" style="margin-top:1.4rem">
         <span class="ico" aria-hidden="true">🙋</span>
-        <p style="margin:0">If any of this looks fiddly or it just won't
-          cooperate, <strong>don't sweat it — tell me before Friday</strong>
-          and I'll help you get your old email saved.</p>
+        <p style="margin:0">Not sure about any of this — or want to actually
+          read those old emails again down the road?
+          <strong>Just tell me before Friday</strong> and I'll help you save
+          them.</p>
       </div>
     </section>
+
+    <!-- ============================================================= -->
+    <!-- ===================  AFTER THE SWITCH  ====================== -->
+    <!-- ============================================================= -->
+    <div class="phase after rise" style="animation-delay:.06s">
+      <p class="kicker">Part 2 · Do this after Friday</p>
+      <h2>After the switch</h2>
+      <p class="when">Once we've flipped over — Friday, July&nbsp;24 onward.</p>
+    </div>
+
+    <div class="callout" style="margin-top:1.5rem">
+      <span class="ico" aria-hidden="true">🔑</span>
+      <p style="margin:0">Set this up with your <strong>new password</strong> —
+        the one I'll give you for the new email. It only starts working
+        <strong>after the switch</strong> on Friday, July&nbsp;24, so there's
+        nothing to set up before then. Don't have your new password yet? Just
+        ask me. Your email address doesn't change — it's still the one ending
+        in <code style="font-weight:700">@harleypig.com</code>.</p>
+    </div>
 
     <!-- ================= SETTINGS ================= -->
     <section class="rise" style="animation-delay:.14s">
