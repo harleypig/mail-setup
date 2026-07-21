@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Save your old emails</title>
+  <meta name="description"
+        content="How to download a copy of your old harleypig.com email with Google Takeout, before the switch." />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#eef2fb" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#131926" media="(prefers-color-scheme: dark)" />
+
+  <!-- Envelope favicon, inline so the page stays self-contained. -->
+  <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9C%89%EF%B8%8F%3C/text%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Figtree:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    /* ---- Tokens (shared look with the main setup page) ------------------ */
+    :root {
+      --paper:      #eef2fb;
+      --paper-2:    #f5f8fd;
+      --card:       #ffffff;
+      --ink:        #1e2735;
+      --muted:      #5b6675;
+      --line:       #dde5f2;
+      --blue:       #2f6fe0;
+      --blue-soft:  #e0eafb;
+      --leaf:       #2f8f63;
+      --leaf-soft:  #dcf0e4;
+      --wash:       #dbe7fb;
+      --shadow:     28px 28px 60px -30px rgba(30, 50, 90, .40);
+      --shadow-sm:  0 2px 0 rgba(30, 50, 90, .05), 0 10px 24px -16px rgba(30, 50, 90, .45);
+      --radius:     22px;
+      --radius-sm:  14px;
+      --display: "Fraunces", Georgia, "Times New Roman", serif;
+      --body: "Figtree", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --paper:      #131926;
+        --paper-2:    #1a2130;
+        --card:       #1f2838;
+        --ink:        #e9eef8;
+        --muted:      #a3b1c7;
+        --line:       #313d52;
+        --blue:       #5c8cf0;
+        --blue-soft:  #22304a;
+        --leaf:       #6bc596;
+        --leaf-soft:  #1f3a2c;
+        --wash:       #1c2740;
+        --shadow:     28px 28px 60px -30px rgba(0, 0, 0, .6);
+        --shadow-sm:  0 2px 0 rgba(0, 0, 0, .25), 0 12px 26px -16px rgba(0, 0, 0, .7);
+      }
+    }
+
+    /* ---- Reset / base --------------------------------------------------- */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+
+    body {
+      margin: 0;
+      font-family: var(--body);
+      font-size: 1.18rem;
+      line-height: 1.65;
+      color: var(--ink);
+      background: var(--paper);
+      background-image:
+        radial-gradient(120% 80% at 50% -10%, var(--wash) 0%, transparent 55%),
+        radial-gradient(90% 60% at 108% 8%, var(--blue-soft) 0%, transparent 45%);
+      background-attachment: fixed;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    main {
+      width: min(680px, 100% - 2.2rem);
+      margin-inline: auto;
+      padding: clamp(2.2rem, 8vw, 4rem) 0 4.5rem;
+    }
+
+    /* ---- Type ----------------------------------------------------------- */
+    h1, h2, h3 { font-family: var(--display); font-weight: 600; line-height: 1.08; margin: 0; }
+    h1 {
+      font-size: clamp(2.4rem, 10vw, 3.4rem);
+      letter-spacing: -.015em;
+      margin-bottom: .5rem;
+    }
+    h1 .accent { color: var(--blue); font-style: italic; }
+    h2 { font-size: clamp(1.7rem, 6.5vw, 2.15rem); letter-spacing: -.01em; margin-bottom: .35rem; }
+    p { margin: 0 0 1rem; }
+    .lead { font-size: 1.32rem; color: var(--muted); font-weight: 500; }
+    .subtitle { font-size: 1.12rem; color: var(--muted); font-weight: 600; margin: 0 0 .8rem; }
+    a { color: var(--blue); font-weight: 600; text-underline-offset: 3px; }
+
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: .55rem;
+      font-weight: 700; font-size: .82rem; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--blue);
+      margin: 0 0 1.1rem;
+    }
+    .eyebrow::before {
+      content: ""; width: 1.9rem; height: 2px; background: var(--blue); border-radius: 2px;
+    }
+
+    .back { display: inline-block; margin-bottom: 1.3rem; font-size: 1rem; }
+    section { margin-top: clamp(2.6rem, 8vw, 3.6rem); }
+
+    /* ---- Callout -------------------------------------------------------- */
+    .callout {
+      display: flex; gap: .95rem; align-items: flex-start;
+      background: var(--paper-2);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 1.05rem 1.15rem;
+      font-size: 1.06rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .callout .ico { font-size: 1.5rem; line-height: 1.2; flex: none; }
+    .callout strong { color: var(--ink); }
+
+    /* ---- Code ----------------------------------------------------------- */
+    code {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      background: var(--paper-2); border: 1px solid var(--line);
+      padding: .06em .4em; border-radius: 7px; font-size: .92em; font-weight: 600;
+    }
+
+    /* ---- Steps ---------------------------------------------------------- */
+    ol.steps { list-style: none; counter-reset: step; margin: 0; padding: 0; display: grid; gap: .8rem; }
+    ol.steps li {
+      counter-increment: step;
+      display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: start;
+      background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-sm);
+      padding: 1.05rem 1.2rem 1.05rem 1rem;
+      box-shadow: var(--shadow-sm);
+    }
+    ol.steps li::before {
+      content: counter(step);
+      font-family: var(--display); font-weight: 600; font-size: 1.15rem;
+      width: 2.2rem; height: 2.2rem; flex: none;
+      display: grid; place-items: center;
+      color: #fff; background: var(--blue);
+      border-radius: 50%;
+      box-shadow: 0 4px 10px -3px var(--blue);
+    }
+    ol.steps li .st { align-self: center; }
+    ol.steps li .st b { font-weight: 700; }
+
+    /* ---- Help banner ---------------------------------------------------- */
+    .help {
+      background: linear-gradient(135deg, var(--blue) 0%, #1e56c8 100%);
+      color: #fff; border-radius: var(--radius);
+      padding: 1.6rem 1.5rem;
+      box-shadow: var(--shadow);
+    }
+    .help h2 { color: #fff; }
+    .help p { color: rgba(255,255,255,.92); margin: 0; }
+
+    footer {
+      margin-top: 3.5rem; padding-top: 1.6rem; border-top: 1px solid var(--line);
+      color: var(--muted); font-size: 1rem; text-align: center;
+    }
+    footer .heart { color: var(--blue); }
+
+    /* ---- Entrance motion ------------------------------------------------ */
+    .rise { opacity: 0; transform: translateY(14px); animation: rise .6s cubic-bezier(.2,.7,.3,1) forwards; }
+    @keyframes rise { to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) {
+      .rise { animation: none; opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <header class="rise" style="animation-delay:.02s">
+      <a class="back" href="./">← Back to email setup</a>
+      <p class="eyebrow">harleypig.com email</p>
+      <h1>Save your old <span class="accent">emails</span> 📦</h1>
+      <p class="subtitle">Download a copy before the switch, so nothing gets
+        lost.</p>
+      <p class="lead">Your old messages live in your current harleypig.com
+        mailbox, and they don't come across to the new service. So if there are
+        any you want to keep, grab a copy first with Google Takeout — Google's
+        own free backup tool. It bundles all your mail into one file you can
+        hang onto.</p>
+    </header>
+
+    <div class="callout rise"
+         style="animation-delay:.08s; margin-top:1.8rem; border-color: color-mix(in srgb, var(--blue) 45%, var(--line)); background: var(--wash)">
+      <span class="ico" aria-hidden="true">⏰</span>
+      <p style="margin:0"><strong>This only works <em>before</em> the switch on
+        Friday, July&nbsp;24.</strong> Once we flip over, the old emails are gone
+        for good and there's no getting them back. Please don't leave it to the
+        last minute.</p>
+    </div>
+
+    <!-- ================= TAKEOUT STEPS ================= -->
+    <section class="rise" style="animation-delay:.12s">
+      <h2>Download a copy</h2>
+      <p style="color:var(--muted); margin-bottom:1.3rem">You can do this right
+        on your <strong style="color:var(--ink)">phone</strong> — it all happens
+        on one web page. (If you happen to have a computer, it's a little easier
+        there, since you'll be saving a file — but your phone works fine.) Just
+        sign in to your <strong style="color:var(--ink)">harleypig.com</strong>
+        account:</p>
+
+      <ol class="steps">
+        <li><span class="st">Go to <code>takeout.google.com</code>. Check that
+          the little picture in the top-right corner is your
+          <b>harleypig.com</b> account — if it isn't, switch to it.</span></li>
+        <li><span class="st">Click <b>Deselect all</b> at the top. That clears
+          everything so you only grab your email.</span></li>
+        <li><span class="st">Scroll down to <b>Mail</b> and check its
+          box.</span></li>
+        <li><span class="st">Scroll to the very bottom and click <b>Next
+          step</b>.</span></li>
+        <li><span class="st">Leave it set to <b>Send download link via
+          email</b> and <b>Export once</b>, then click <b>Create
+          export</b>.</span></li>
+        <li><span class="st">Google does the work and emails you a
+          <b>download link</b> — this can take anywhere from a few minutes to a
+          few hours. Click it, download the file, and keep it somewhere safe.
+          🎉</span></li>
+      </ol>
+
+      <p style="color:var(--muted); margin-top:1.2rem">You'll get a
+        <code>.zip</code> file — just hang onto it. After the switch, the
+        <a href="restore.html">bring your old emails back</a> guide walks you
+        through opening it.</p>
+    </section>
+
+    <!-- ================= ASK ME ================= -->
+    <section class="rise" style="animation-delay:.06s">
+      <div class="help">
+        <h2>Don't need them? 🙋</h2>
+        <p>Not everyone wants their old email, and that's perfectly fine — you
+          can skip this entirely. If you do want to keep it but this looks
+          fiddly, just tell me before Friday and I'll save it for you.</p>
+      </div>
+    </section>
+
+    <footer>
+      <p><a href="./">← Back to email setup</a></p>
+      <p>Stuck on any step? That's normal — just ask me and I'll sort it out.
+        <span class="heart">♥</span></p>
+    </footer>
+  </main>
+</body>
+</html>
